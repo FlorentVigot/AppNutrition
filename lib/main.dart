@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:yuka/Detail.dart';
-import 'package:yuka/pages/array.dart';
-import 'package:yuka/pages/caracteristique.dart';
-import 'package:yuka/pages/nutrition.dart';
+import 'package:yuka/pages/table_product.dart';
+import 'package:yuka/pages/caracteristique_product.dart';
+import 'package:yuka/pages/nutrition_product.dart';
 import 'package:yuka/res/app_vectorial_images.dart';
 
 import 'Color.dart';
@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Mes Scans',
       theme: ThemeData(
         // This is the theme of your application.
@@ -28,15 +29,43 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blue,
-        primaryColor: Colors.cyan,
-        primaryColorDark: Colors.deepPurple,
-        accentColor: Colors.green
+
+          fontFamily: 'Avenir',
       ),
-      home: Nutrition(),
+      home: HomePage(),
+      //onGenerateRoute: AppRoutes.getRoutes,
+      //onUnknownRoute: AppRoutes.onUnknownRoute,
     );
   }
 }
+// Route for differnts pages
+/*class AppRoutes {
+  static const String routeHome = '/';
+  static const String routePost = '/post';
+  const AppRoutes._();
+  static Route<dynamic> getRoutes(RouteSettings settings) {
+    WidgetBuilder builder;
+    Uri route = Uri.parse(settings.name);
+    String routeName = settings.name;
+    Object arguments = settings.arguments;
+    switch (routeName) {
+      case routeHome:
+        builder = (BuildContext context) => Array();
+        break;
+      case routePosts:
+      // Sous la forme (/post?id=123)
+        builder = (BuildContext context) =>
+            Caracteristique(route.queryParameters['id']);
+        break;
+    }
+    return MaterialPageRoute<dynamic>(
+      builder: builder,
+      settings: settings,
+    );
+  }
+}
+
+ */
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -123,48 +152,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-/*class Accueil extends StatelessWidget {
-  const Accueil({Key? key}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        child: Row(
 
-        )
-        title: Text(widget.title),
-        // svgpicture.assets
-      ),
-      body : Center(
-        child: <Widget>[
-          Positioned(
-            bottom: 0.0,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: <Widget>[
-                    Text(
-                        "Vous n'avez pas encore scannez de produit",
-                    ),
-                    GetStartedButton(
-                      label: 'Commencer',
-                      onPressed: () {},
-                      style: ButtonStyle(
-                        backgroundColor: Colors.orangeAccent
-                      )
-                      // TODO icon fleche
-                    ),
-                    ],
-                  ),
-              ),
-          ),
-        ],
-      
-      ),
-    );
-  }
-}
-*/
+
 
 class ControlYourHome extends StatelessWidget {
   const ControlYourHome({Key? key}) : super(key: key);
@@ -293,7 +282,12 @@ class HomePage extends StatelessWidget {
                   height: 20.0,
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                          builder: (BuildContext context) => DetailsScreen()),
+                    );
+                  },
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 20.0,

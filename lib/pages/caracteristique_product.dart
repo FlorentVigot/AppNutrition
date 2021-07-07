@@ -5,9 +5,12 @@ import 'package:yuka/Detail.dart';
 import 'package:yuka/Product.dart';
 
 import '../Color.dart';
+import '../navigationbar.dart';
 
 
-class Caracteristique extends StatelessWidget {
+class CaracteristiqueScreen extends StatelessWidget {
+
+
   @override
   Widget build(BuildContext context) {
     Product product = Product(
@@ -34,6 +37,7 @@ class Caracteristique extends StatelessWidget {
           ),
         ),
       ),
+      bottomNavigationBar: BottomNavigation(),
     );
   }
 }
@@ -62,27 +66,32 @@ class ProductCaracteristique extends StatelessWidget {
       topRight: Radius.circular(16.0),
     );
 
-    return Container(
-      decoration: const BoxDecoration(
-        color: AppColors.WHITE,
-        borderRadius: borderRadius,
-      ),
-      child: SingleChildScrollView(
-        child: ClipRRect(
+    return Positioned.fill(
+      top: 300.0,
+      child: Container(
+        decoration: const BoxDecoration(
+          color: AppColors.WHITE,
           borderRadius: borderRadius,
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: 10.0,
-              vertical: 20.0,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-
-                ProductFields(),
-
-
-              ],
+        ),
+        child: SingleChildScrollView(
+          child: ClipRRect(
+            borderRadius: borderRadius,
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 30.0,
+                vertical: 20.0,
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ProductTitle(),
+                  const SizedBox(
+                    height: 20.0,
+                  ),
+                  ProductFields(),
+                ],
+              ),
             ),
           ),
         ),
@@ -141,88 +150,111 @@ class ProductTitle extends StatelessWidget {
 
 
 
-class CaracteristiqueLabels extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return ColoredBox(
-        color: AppColors.GRAY2,
-    );
-
-  }
-}
-
-/* class CaracteristiqueLabel extends StatelessWidget {
+class CaracteristiqueField extends StatelessWidget {
   final String label;
-  CaracteristiqueLabel({
+  CaracteristiqueField({
     required this.label,
-
   });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text('')
-            ),
-    ],
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5),
+          color: AppColors.GRAY1),
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          vertical: 10.0,
+        ),
+        child: Text(
+          label,
+          style: TextStyle(
+            color: AppColors.BLUE,
+            fontWeight: FontWeight.w700,
+          ),
+          textAlign: TextAlign.center,
+        ),
+      ),
+    );
+  }
 }
 
 class ProductFields extends StatelessWidget {
   const ProductFields({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        ProductField(
-          label: 'Légume',
-          value: 'petit pois 41%, carottes 22%',
-          divider: true,
+        CaracteristiqueField(label: 'Ingrédients'),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              ProductField(
+                label: 'Légume',
+                value: 'petit pois 41%, carottes 22%',
+                divider: true,
+              ),
+              ProductField(
+                label: 'Eau',
+                value: '',
+                divider: true,
+              ),
+              ProductField(
+                label: 'Sucre',
+                value: '',
+                divider: true,
+              ),
+              ProductField(
+                label: 'Garniture (2,5 %)',
+                value: 'salade, oignon grelot',
+                divider: true,
+              ),
+              ProductField(
+                label: 'Sel',
+                value: '',
+                divider: true,
+              ),
+              ProductField(
+                label: 'Aromes naturels',
+                value: '',
+                divider: false,
+              ),
+            ],
+          ),
         ),
-        ProductField(
-          label: 'Eau',
-          value: '',
-          divider: true,
-        ),
-        ProductField(
-          label: 'Sucre',
-          value: '',
-          divider: true,
-        ),ProductField(
-          label: 'Garniture (2,5 %)',
-          value: 'salade, oignon grelot',
-          divider: true,
-        ),
-        ProductField(
-          label: 'Sel',
-          value: '',
-          divider: true,
-        ),
-        ProductField(
-          label: 'Aromes naturels',
-          value: '',
-          divider: false,
-        ),
-
+        CaracteristiqueField(label: 'Substances allergènes'),
+        Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text('Aucune',
+                style: TextStyle(
+                  color: AppColors.BLUE,
+                  fontWeight: FontWeight.w700,
+                ))),
+        CaracteristiqueField(label: 'Additifs'),
+        Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text('Aucun',
+                style: TextStyle(
+                  color: AppColors.BLUE,
+                  fontWeight: FontWeight.w700,
+                ))),
       ],
     );
   }
 }
+
 class ProductField extends StatelessWidget {
   final String label;
   final String value;
   final bool divider;
-
   ProductField({
     required this.label,
     required this.value,
     this.divider = true,
   });
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -234,7 +266,11 @@ class ProductField extends StatelessWidget {
             children: [
               Expanded(
                 // flex: 1,
-                child: Text(label),
+                child: Text(
+                  label,
+                  style: TextStyle(
+                      color: AppColors.BLUE, fontWeight: FontWeight.w700),
+                ),
               ),
               Expanded(
                 // flex: 1,
@@ -251,18 +287,3 @@ class ProductField extends StatelessWidget {
     );
   }
 }
-
-class ProductFields2 extends StatelessWidget {
-  const ProductFields2({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-      ProductField(
-      label: 'Aucune',
-      value: '',
-      divider: false,
-    ),],);}}
-*/

@@ -92,3 +92,10 @@ flutter:
     - family: AppIcons
       fonts:
         - asset: res/fonts/app_icons.ttf
+    - family: Avenir
+      fonts:
+        - asset: res/fonts/Avenir-Medium.ttf
+        - asset: res/fonts/Avenir-Heavy.ttf
+          weight: 700
+        - asset: res/fonts/Avenir-Light.ttf
+          weight: 300

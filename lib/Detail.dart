@@ -12,6 +12,7 @@ import 'package:yuka/res/app_images.dart';
 import 'Color.dart';
 import 'Product.dart';
 import 'app_icons.dart';
+import 'navigationbar.dart';
 import 'network/network_api.dart';
 
 class DetailsScreen extends StatelessWidget {
@@ -26,12 +27,13 @@ class DetailsScreen extends StatelessWidget {
     );
 
     return Scaffold(
-      body: SizedBox.expand(
+      body: SizedBox(
         child: ProductHolder(
           product: product,
           child: Stack(
             children: <Widget>[
-              ProductImage(),
+              ProductBackgroundImage(),
+              ProductAppBar(),
               Positioned(
                 left: 0.0,
                 right: 0.0,
@@ -43,20 +45,52 @@ class DetailsScreen extends StatelessWidget {
           ),
         ),
       ),
+      bottomNavigationBar: BottomNavigation(),
     );
   }
 }
 
-class ProductImage extends StatelessWidget {
-  const ProductImage({Key? key}) : super(key: key);
+
+class ProductBackgroundImage extends StatelessWidget {
+  const ProductBackgroundImage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
-      height: 300.0,
-      color: AppColors.YELLOW,
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          fit: BoxFit.cover,
+          image: NetworkImage(
+              'https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1900&q=80'),
+        ),
+      ),
+    );
+  }
+}
 
+class ProductAppBar extends StatelessWidget {
+  const ProductAppBar({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      backgroundColor: Colors.transparent,
+      leading: IconButton(
+        icon: Icon(
+          Icons.arrow_back,
+          color: AppColors.WHITE,
+        ),
+        onPressed: () => Navigator.of(context).pop(),
+      ),
+      actions: <Widget>[
+          IconButton(
+          icon:Icon(
+            Icons.reply,
+            color:AppColors.WHITE
+          ),
+          onPressed: () =>Navigator.of(context).pop(),
+          )
+      ],
     );
   }
 }
@@ -87,6 +121,7 @@ class ProductDetails extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+
                 ProductTitle(),
                 const SizedBox(
                   height: 10.0,
@@ -121,6 +156,7 @@ class ProductHolder extends InheritedWidget {
   @override
   bool updateShouldNotify(ProductHolder old) => product != old.product;
 }
+
 
 class ProductTitle extends StatelessWidget {
   const ProductTitle({Key? key}) : super(key: key);
@@ -325,121 +361,61 @@ class ProductField extends StatelessWidget {
     );
   }
 }
-/* class Detail extends StatelessWidget {
+
+class ProductRestriction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          actions: <Widget>[
-
-        ]
-        ),
-        body: Container(
-
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              fit:BoxFit.cover,
-
-              image: NetworkImage(
-                  ("https://assets.afcdn.com/teaser/20210617/1948__45_w900h1200c1.jpg"),
-              ),
-            ),
-            borderRadius: BorderRadius.vertical(top: Radius.circular(16.0)),
-            color: AppColors.WHITE
-            ),
-          child: Column(
-              children: <Widget>[
-                Text(
-                  "Petit pois et carotte",
-                  style: TextStyle(color: AppColors.BLACK),
-
-                ),
-                Text(
-                  "Cassegrin",
-                  style: TextStyle(color: AppColors.GRAY2),
-                ),
-                Text(
-                    "Petit pois et carotte l'étuvée avec garniture",
-                  style: TextStyle(color: AppColors.BLACK),
-                ),
+    return Container(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
               Container(
-                color: AppColors.GRAY3,
-                child: Text(
-                    'Nutri-Score'
-                ),
-                  
-
-
-
-          ),
-                Row(
-                  children: [
-                    Text(
-                        'Quantité'
+                  decoration: BoxDecoration(
+                  color: AppColors.BLUE_LIGHT,
+                  borderRadius: BorderRadius.circular(0.0)),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 30.0,
+                      vertical: 10.0,
                     ),
+
+                    child:
+                        Text(
+                          'Végétalien'.toUpperCase(),
+                          style: TextStyle(color: AppColors.WHITE)),
+                        ),
+
+                    ),
+              Container(
+                    decoration: BoxDecoration(
+                    color: AppColors.BLUE_LIGHT,
+                    borderRadius: BorderRadius.circular(0.0)),
+                    child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                    horizontal: 30.0,
+                    vertical: 10.0,
+                    ),
+
+                    child:
                     Text(
-                      '200g (égouté 130g)'
-                    )
-                  ],
-                  /*Row(
-                    children: [
-                      Text(
-                          'Vendu'
-                      ),
-                      Text(
-                          'France'
-                      )
-                    ],
-                    */
+                    'Végétarien'.toUpperCase(),
+                    style: TextStyle(color: AppColors.WHITE)),
+                    ),
 
-                  ),
-
-                  Row(
-                    children: [
-                      TextButton(
-                        onPressed: () {},
-
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                          horizontal: 20.0,
-                          vertical: 8.0,
-                          ),
-                          child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              const SizedBox(
-                              width: 10.0,
-                              ),
-                              const Icon(
-                              Icons.check,
-                              ),
-                              Text(
-                              'Végétalien'.toUpperCase(),
-                              ),
-                            ],
-                          ),
-
-                          /* child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              const SizedBox(
-                                width: 10.0,
-                              ),
-                              const Icon(
-                                Icons.close,
-                              ),
-                              Text(
-                                'Végétarien'.toUpperCase(),
-                              ),
-                            ],
-                          ), */
-                        )
-                      )
-              ]
-          ),
-        ]
-          )
+                    ),
+                ],
     ),
+    );
+  }
+}
+
+
+/*
+
+
+
+
+
     persistentFooterButtons: <Widget>[
 
     ]
@@ -464,7 +440,7 @@ class ProductDetails extends StatelessWidget {
 }
 
 
-https://sharemycode.fr/2t3 */
+https://sharemycode.fr/2t3
 
 
 
@@ -493,7 +469,7 @@ class ProductAvailableState extends ProductState {
   ProductAvailableState(Product product) : super(product);
 }
 
-/*
+
 class ProductBloc extends Bloc<ProductEvent, ProductState> {
   // Donner la valeur initiale
   ProductBloc() : super(InitialState());
@@ -522,4 +498,6 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       );
     }
   }
-}*/
+}
+*/
+

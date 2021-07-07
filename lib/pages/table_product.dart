@@ -5,9 +5,10 @@ import 'package:yuka/Detail.dart';
 import 'package:yuka/Product.dart';
 
 import '../Color.dart';
+import '../navigationbar.dart';
 
 
-class Array extends StatelessWidget {
+class TableScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Product product = Product(
@@ -34,6 +35,7 @@ class Array extends StatelessWidget {
           ),
         ),
       ),
+      bottomNavigationBar: BottomNavigation(),
     );
   }
 }
